@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abubakar Yunusa Mohammed - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10b981', // Light green
+                        background: {
+                            light: '#f8fafc',
+                            dark: '#0f172a'
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Initialize EmailJS with your Public Key
+        emailjs.init("SPFJC9c92Y5bnE0B1"); // Replace with your actual EmailJS public key
+    </script>
+    <style>
+        :root {
+            --primary: 16, 185, 129; /* Light green in RGB */
+            --background-light: 248, 250, 252;
+            --background-dark: 15, 23, 42;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: rgb(var(--background-light));
+            color: #1e293b;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark {
+            background-color: rgb(var(--background-dark));
+            color: white;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .dark .gradient-text {
+            background: linear-gradient(135deg, #34d399 0%, #6ee7b7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Theme transition */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* Image hover effects */
+        .image-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .image-hover:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .dark .image-hover:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .profile-image {
+            border: 4px solid #10b981;
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Loading spinner */
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #10b981;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/80 dark:bg-background-dark/80 backdrop-blur-md z-50 border-b border-gray-200 dark:border-white/10">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-xl font-bold text-gray-800 dark:text-white">AYM</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">Home</a>
+                    <a href="#about" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">About</a>
+                    <a href="#skills" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">Skills</a>
+                    <a href="#projects" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">Projects</a>
+                    <a href="#gallery" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">Gallery</a>
+                    <a href="#booking" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">Booking</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <!-- Theme Toggle -->
+                    <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <button class="md:hidden text-gray-600 dark:text-gray-300">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Background Effects -->
+    <div class="pointer-events-none absolute inset-0 -z-10">
+        <div class="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-primary/10 blur-3xl"></div>
+        <div class="absolute top-1/2 -right-24 w-96 h-96 rounded-full bg-primary/10 blur-3xl"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-28 md:pt-32 fade-in">
+        <div class="container mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-extrabold leading-tight gradient-text">
+                    Abubakar Yunusa Mohammed
+                </h1>
+                <p class="mt-4 text-gray-600 dark:text-white/80 text-lg max-w-xl">
+                    Networking, Cybersecurity, CCTV & IoT Solutions Expert — Building secure, connected, and intelligent systems.
+                </p>
+                <div class="mt-6 flex flex-wrap gap-4">
+                    <a href="#projects" class="inline-flex items-center gap-2 rounded-full bg-primary text-white px-6 py-3 font-semibold hover:brightness-110 transition-all">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        View Projects
+                    </a>
+                    <a href="#booking" class="inline-flex items-center gap-2 rounded-full border border-gray-300 dark:border-white/20 bg-white/50 dark:bg-white/5 text-gray-700 dark:text-white px-6 py-3 font-semibold hover:bg-gray-50 dark:hover:bg-white/10 transition-all">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        Get Consultation
+                    </a>
+                </div>
+            </div>
+            <div class="flex justify-center md:justify-end">
+                <div class="relative w-64 h-64">
+                    <div class="absolute -inset-1 rounded-[2rem] bg-gradient-to-br from-primary/70 to-transparent blur-xl"></div>
+                    <div class="relative w-full h-full rounded-[2rem] ring-1 ring-gray-200 dark:ring-white/10 bg-gradient-to-br from-white/50 dark:from-white/5 to-transparent grid place-items-center overflow-hidden">
+                        <!-- Profile Image -->
+                        <img 
+                            src="yunusa.jpeg" 
+                            alt="Abubakar Yunusa Mohammed"
+                            class="w-44 h-53 rounded-full object-cover profile-image image-hover"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 fade-in">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4">About Me</h2>
+                <p class="text-gray-600 dark:text-white/70 text-lg max-w-2xl mx-auto">Computer Engineering graduate with practical experience in networks, CCTV, IoT, and cybersecurity.</p>
+                <div class="mt-6 h-1 w-20 bg-primary rounded-full mx-auto shadow-[0_0_20px_#10b981]"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8 items-start">
+                <!-- Profile Card -->
+                <div class="rounded-2xl overflow-hidden bg-gradient-to-br from-primary/6 to-transparent ring-1 ring-gray-200 dark:ring-white/6">
+                    <!-- Profile Image -->
+                    <div class="h-64 bg-primary/10 grid place-items-center overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1580894894513-541e068a3e2b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=400&q=80" 
+                            alt="Abubakar working on network setup"
+                            class="w-full h-full object-cover image-hover"
+                        >
+                    </div>
+                    <div class="p-6 bg-white dark:bg-gray-800">
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-white">Abubakar Yunusa Mohammed</h3>
+                        <p class="text-gray-600 dark:text-white/70 mt-2">Computer Engineering Graduate</p>
+                        <div class="mt-4 space-y-2 text-sm">
+                            <div class="flex items-center gap-2 text-gray-600 dark:text-white/70">
+                                <i class="fa-solid fa-location-dot text-primary"></i>
+                                <span>Based in Nigeria</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-600 dark:text-white/70">
+                                <i class="fa-solid fa-certificate text-primary"></i>
+                                <span>CCNA | CyberOps Certified</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="rounded-2xl p-6 ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800">
+                        <h4 class="font-bold text-gray-800 dark:text-white text-xl mb-4">Professional Overview</h4>
+                        <p class="text-gray-600 dark:text-white/80 leading-relaxed">
+                            I specialize in designing and implementing secure network infrastructures, deploying advanced CCTV systems with secure remote access, developing IoT solutions, and conducting comprehensive vulnerability assessments to strengthen organizational security posture.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="rounded-2xl p-6 ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800">
+                            <h5 class="font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
+                                <i class="fa-solid fa-briefcase text-primary"></i>
+                                Experience
+                            </h5>
+                            <ul class="space-y-4 text-gray-600 dark:text-white/80">
+                                <li>
+                                    <strong class="text-gray-800 dark:text-white">Apexium Technologies Limited</strong>
+                                    <br>
+                                    <span class="text-sm text-primary">Network Security Architect | Cybersecurity Mentor</span>
+                                    <p class="text-sm mt-1">Implemented secure network infrastructures for enterprise environments</p>
+                                </li>
+                                <li>
+                                    <strong class="text-gray-800 dark:text-white">KAD-ICT-HUB</strong>
+                                    <br>
+                                    <span class="text-sm text-primary">Networking | Cybersecurity Instructor</span>
+                                    <p class="text-sm mt-1">Facilitated training for 500+ participants in the past year</p>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="rounded-2xl p-6 ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800">
+                            <h5 class="font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
+                                <i class="fa-solid fa-graduation-cap text-primary"></i>
+                                Education & Certifications
+                            </h5>
+                            <ul class="space-y-3 text-gray-600 dark:text-white/80">
+                                <li class="flex items-center gap-2">
+                                    <i class="fa-solid fa-check text-primary text-sm"></i>
+                                    HND. Computer Engineering
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fa-solid fa-check text-primary text-sm"></i>
+                                    CCNA Certified
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fa-solid fa-check text-primary text-sm"></i>
+                                    CyberOps Associate
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 fade-in">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4">Technical Skills</h2>
+                <p class="text-gray-600 dark:text-white/70 text-lg max-w-2xl mx-auto">Comprehensive expertise across network infrastructure, security, and IoT solutions</p>
+                <div class="mt-6 h-1 w-20 bg-primary rounded-full mx-auto shadow-[0_0_20px_#10b981]"></div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Skill 1 -->
+                <div class="rounded-2xl p-6 ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800 hover:scale-105 transition-transform">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-primary/15 text-primary grid place-items-center ring-1 ring-primary/30">
+                            <i class="fa-solid fa-network-wired"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800 dark:text-white text-lg">Network Design & Configuration</h4>
+                            <p class="text-gray-600 dark:text-white/70 text-sm mt-2">Designing scalable LAN/WAN topologies, VLAN segmentation, routing, and redundancy for enterprise environments.</p>
+                            <div class="mt-3 text-xs text-primary font-medium">Tools: Cisco Devices, MikroTik Routers, OSPF, BGP, VLANs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 2 -->
+                <div class="rounded-2xl p-6 ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800 hover:scale-105 transition-transform">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-primary/15 text-primary grid place-items-center ring-1 ring-primary/30">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800 dark:text-white text-lg">Cybersecurity and Vulnerability Assessment</h4>
+                            <p class="text-gray-600 dark:text-white/70 text-sm mt-2">Conducting threat assessments, penetration testing, and implementing security controls to reduce attack surface.</p>
+                            <div class="mt-3 text-xs text-primary font-medium">Tools: Nmap, Metasploit, Wireshark, Vulnerability Scanners</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 3 -->
+                <div class="rounded-2xl p-6 ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800 hover:scale-105 transition-transform">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-primary/15 text-primary grid place-items-center ring-1 ring-primary/30">
+                            <i class="fa-solid fa-camera"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800 dark:text-white text-lg">CCTV Installation & Configuration</h4>
+                            <p class="text-gray-600 dark:text-white/70 text-sm mt-2">End-to-end CCTV deployment including camera selection, placement planning, and secure remote access configuration.</p>
+                            <div class="mt-3 text-xs text-primary font-medium">Tools: IP Cameras, NVRs, RTSP, ONVIF</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 4 -->
+                <div class="rounded-2xl p-6 ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800 hover:scale-105 transition-transform">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-primary/15 text-primary grid place-items-center ring-1 ring-primary/30">
+                            <i class="fa-solid fa-microchip"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800 dark:text-white text-lg">IoT System Design and Automation</h4>
+                            <p class="text-gray-600 dark:text-white/70 text-sm mt-2">Building connected systems using microcontrollers, sensors, and secure cloud integrations for automation and monitoring.</p>
+                            <div class="mt-3 text-xs text-primary font-medium">Tools: ESP32, MQTT, MQTT over TLS, AWS/GCP/Custom APIs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 5 -->
+                <div class="rounded-2xl p-6 ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800 hover:scale-105 transition-transform">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-primary/15 text-primary grid place-items-center ring-1 ring-primary/30">
+                            <i class="fa-brands fa-linux"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800 dark:text-white text-lg">Linux System Administration</h4>
+                            <p class="text-gray-600 dark:text-white/70 text-sm mt-2">Server setup, hardening, shell scripting, and automation for reliable infrastructure operations.</p>
+                            <div class="mt-3 text-xs text-primary font-medium">Tools: Ubuntu, Debian, Bash, systemd, Ansible</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill 6 -->
+                <div class="rounded-2xl p-6 ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800 hover:scale-105 transition-transform">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-primary/15 text-primary grid place-items-center ring-1 ring-primary/30">
+                            <i class="fa-brands fa-windows"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800 dark:text-white text-lg">Windows Server Administration</h4>
+                            <p class="text-gray-600 dark:text-white/70 text-sm mt-2">Managing Active Directory, Group Policy, Windows Server roles, and enterprise authentication services.</p>
+                            <div class="mt-3 text-xs text-primary font-medium">Tools: Windows Server, Active Directory, Group Policy, PowerShell</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 fade-in">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4">Featured Projects</h2>
+                <p class="text-gray-600 dark:text-white/70 text-lg max-w-2xl mx-auto">Real-world implementations showcasing technical expertise and innovative solutions</p>
+                <div class="mt-6 h-1 w-20 bg-primary rounded-full mx-auto shadow-[0_0_20px_#10b981]"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="rounded-2xl p-6 ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800 hover:ring-primary/40 hover:-translate-y-1 transition-all">
+                    <div class="mb-4 text-primary text-sm font-semibold">Project 1</div>
+                    <h3 class="font-bold text-gray-800 dark:text-white text-xl mb-4">IoT-Enabled Security System for Smart Buildings</h3>
+                    <p class="text-gray-600 dark:text-white/70 leading-relaxed mb-4">End-to-end system integrating sensors, microcontrollers, and secure cloud connectivity for real-time monitoring and automated security responses.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs border border-primary/20">IoT</span>
+                        <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs border border-primary/20">Security</span>
+                        <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs border border-primary/20">Cloud</span>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="rounded-2xl p-6 ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800 hover:ring-primary/40 hover:-translate-y-1 transition-all">
+                    <div class="mb-4 text-primary text-sm font-semibold">Project 2</div>
+                    <h3 class="font-bold text-gray-800 dark:text-white text-xl mb-4">Enterprise Network Design and Implementation</h3>
+                    <p class="text-gray-600 dark:text-white/70 leading-relaxed mb-4">Scalable enterprise topology with advanced routing, VLAN segmentation, redundancy protocols, and comprehensive security implementations.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs border border-primary/20">Networking</span>
+                        <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs border border-primary/20">Cisco</span>
+                        <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs border border-primary/20">Security</span>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="rounded-2xl p-6 ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800 hover:ring-primary/40 hover:-translate-y-1 transition-all">
+                    <div class="mb-4 text-primary text-sm font-semibold">Project 3</div>
+                    <h3 class="font-bold text-gray-800 dark:text-white text-xl mb-4">Smart CCTV Surveillance with IoT Integration</h3>
+                    <p class="text-gray-600 dark:text-white/70 leading-relaxed mb-4">Intelligent camera network featuring remote access, AI-powered alerting, and seamless integration with IoT device automation systems.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs border border-primary/20">CCTV</span>
+                        <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs border border-primary/20">IoT</span>
+                        <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs border border-primary/20">AI</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 fade-in">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4">Project Gallery</h2>
+                <p class="text-gray-600 dark:text-white/70 text-lg max-w-2xl mx-auto">Visual showcase of implemented solutions and technical setups</p>
+                <div class="mt-6 h-1 w-20 bg-primary rounded-full mx-auto shadow-[0_0_20px_#10b981]"></div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Real project images -->
+                <div class="group relative overflow-hidden rounded-2xl ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800 hover:ring-primary/40 transition-all image-hover">
+                    <div class="aspect-square overflow-hidden">
+                        <img 
+                            src="server room.jpg" 
+                            alt="Network server room setup"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        >
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <p class="text-white text-sm font-medium">Enterprise Network Server Room</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden rounded-2xl ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800 hover:ring-primary/40 transition-all image-hover">
+                    <div class="aspect-square overflow-hidden">
+                        <img 
+                            src="cctv.jpg" 
+                            alt="CCTV security camera installation"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        >
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <p class="text-white text-sm font-medium">CCTV Security System Installation</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden rounded-2xl ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800 hover:ring-primary/40 transition-all image-hover">
+                    <div class="aspect-square overflow-hidden">
+                        <img 
+                            src="iot.jpg" 
+                            alt="IoT sensor network"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        >
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <p class="text-white text-sm font-medium">IoT Sensor Network Deployment</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden rounded-2xl ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800 hover:ring-primary/40 transition-all image-hover">
+                    <div class="aspect-square overflow-hidden">
+                        <img 
+                            src="network monitorng.jpg" 
+                            alt="Cybersecurity monitoring"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        >
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <p class="text-white text-sm font-medium">Cybersecurity Threat Monitoring</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden rounded-2xl ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800 hover:ring-primary/40 transition-all image-hover">
+                    <div class="aspect-square overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=800&q=80" 
+                            alt="Network cable management"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        >
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <p class="text-white text-sm font-medium">Professional Network Cable Management</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden rounded-2xl ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800 hover:ring-primary/40 transition-all image-hover">
+                    <div class="aspect-square overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=800&q=80" 
+                            alt="Technical training session"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        >
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <p class="text-white text-sm font-medium">Cybersecurity Training Session</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="py-20 fade-in">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4">Schedule a Consultation</h2>
+                <p class="text-gray-600 dark:text-white/70 text-lg max-w-2xl mx-auto">Let's discuss your project requirements and find the best solution for your needs</p>
+                <div class="mt-6 h-1 w-20 bg-primary rounded-full mx-auto shadow-[0_0_20px_#10b981]"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8 items-start">
+                <!-- Booking Form -->
+                <div class="lg:col-span-2 rounded-2xl p-6 ring-1 ring-gray-200 dark:ring-white/10 bg-gradient-to-br from-primary/6 to-transparent">
+                    <h4 class="font-bold text-gray-800 dark:text-white text-xl mb-6">Book a Consultation Slot</h4>
+                    <form id="consultationForm" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 dark:text-white text-sm font-medium mb-2">Full Name *</label>
+                                <input type="text" name="full_name" required class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-white/10 rounded-xl text-gray-800 dark:text-white placeholder-gray-500 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 dark:text-white text-sm font-medium mb-2">Email Address *</label>
+                                <input type="email" name="email" required class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-white/10 rounded-xl text-gray-800 dark:text-white placeholder-gray-500 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 dark:text-white text-sm font-medium mb-2">Service Needed *</label>
+                                <select name="service" required class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-white/10 rounded-xl text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                                    <option value="">Select a service</option>
+                                    <option value="networking">Networking</option>
+                                    <option value="cctv">CCTV Installation</option>
+                                    <option value="iot">IoT Solutions</option>
+                                    <option value="security">Cybersecurity</option>
+                                    <option value="training">Training</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 dark:text-white text-sm font-medium mb-2">Preferred Date *</label>
+                                <input type="date" name="preferred_date" required class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-white/10 rounded-xl text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-700 dark:text-white text-sm font-medium mb-2">Project Details *</label>
+                            <textarea name="project_details" rows="4" required class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-white/10 rounded-xl text-gray-800 dark:text-white placeholder-gray-500 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Describe your project requirements..."></textarea>
+                        </div>
+
+                        <button type="submit" id="submitBtn" class="w-full bg-primary text-white py-4 rounded-xl font-semibold hover:bg-primary/90 transition-colors flex items-center justify-center">
+                            <span id="submitText">Schedule Consultation</span>
+                            <div id="submitSpinner" class="spinner hidden"></div>
+                        </button>
+                        
+                        <div id="formMessage" class="hidden p-4 rounded-xl text-center"></div>
+                    </form>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="space-y-6">
+                    <div class="rounded-2xl p-6 ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800">
+                        <h4 class="font-bold text-gray-800 dark:text-white text-lg mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-clock text-primary"></i>
+                            What to Expect
+                        </h4>
+                        <ul class="space-y-3 text-gray-600 dark:text-white/80">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check text-primary mt-1 text-sm"></i>
+                                <span>Personalized assessment and recommendations</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check text-primary mt-1 text-sm"></i>
+                                <span>Clear scope, timeline, and deliverables</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check text-primary mt-1 text-sm"></i>
+                                <span>Follow-up resources and documentation</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="rounded-2xl p-6 ring-1 ring-gray-200 dark:ring-white/10 bg-white dark:bg-gray-800">
+                        <h4 class="font-bold text-gray-800 dark:text-white text-lg mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-primary"></i>
+                            Services Offered
+                        </h4>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="flex items-center gap-2 text-gray-600 dark:text-white/70 text-sm">
+                                <i class="fa-solid fa-circle text-primary text-xs"></i>
+                                Network Design
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-600 dark:text-white/70 text-sm">
+                                <i class="fa-solid fa-circle text-primary text-xs"></i>
+                                CCTV Installation
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-600 dark:text-white/70 text-sm">
+                                <i class="fa-solid fa-circle text-primary text-xs"></i>
+                                IoT Solutions
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-600 dark:text-white/70 text-sm">
+                                <i class="fa-solid fa-circle text-primary text-xs"></i>
+                                Cybersecurity
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-600 dark:text-white/70 text-sm">
+                                <i class="fa-solid fa-circle text-primary text-xs"></i>
+                                Vulnerability Assessment
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-600 dark:text-white/70 text-sm">
+                                <i class="fa-solid fa-circle text-primary text-xs"></i>
+                                System Administration
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 dark:border-white/10 py-12 bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="text-2xl font-bold text-gray-800 dark:text-white mb-4">AYM</div>
+                    <p class="text-gray-600 dark:text-white/70 max-w-md">
+                        Building secure, connected, and intelligent systems through expert networking, cybersecurity, CCTV, and IoT solutions.
+                    </p>
+                    <div class="flex space-x-4 mt-6">
+    <a href="https://linkedin.com/in/abubakar-yunusa-mohammed-45a826301" target="_blank" class="text-gray-600 dark:text-white/70 hover:text-primary transition-colors">
+        <i class="fab fa-linkedin text-xl"></i>
+    </a>
+    <a href="https://X.com/Abubaka37495644" target="_blank" class="text-gray-600 dark:text-white/70 hover:text-primary transition-colors">
+        <i class="fab fa-twitter text-xl"></i>
+    </a>
+    <a href="https://github.com/Yofel123" target="_blank" class="text-gray-600 dark:text-white/70 hover:text-primary transition-colors">
+        <i class="fab fa-github text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h5 class="font-semibold text-gray-800 dark:text-white mb-4">Quick Links</h5>
+                    <ul class="space-y-2 text-gray-600 dark:text-white/70">
+                        <li><a href="#home" class="hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="#about" class="hover:text-primary transition-colors">About</a></li>
+                        <li><a href="#skills" class="hover:text-primary transition-colors">Skills</a></li>
+                        <li><a href="#projects" class="hover:text-primary transition-colors">Projects</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="font-semibold text-gray-800 dark:text-white mb-4">Contact</h5>
+                    <ul class="space-y-2 text-gray-600 dark:text-white/70">
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-envelope text-primary"></i>
+                            <span>abubakaryunusa971@gmail.com</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-phone text-primary"></i>
+                            <span>+234 7060850329</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-map-marker-alt text-primary"></i>
+                            <span>Nigeria</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 dark:border-white/10 mt-8 pt-8 text-center text-gray-600 dark:text-white/60">
+                <p>&copy; 2024 Abubakar Yunusa Mohammed. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const body = document.body;
+
+            // Check for saved theme or prefer-color-scheme
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                body.classList.add('dark');
+                themeIcon.className = 'fas fa-sun';
+            } else {
+                body.classList.remove('dark');
+                themeIcon.className = 'fas fa-moon';
+            }
+
+            // Theme toggle button
+            themeToggle.addEventListener('click', function() {
+                body.classList.toggle('dark');
+                
+                if (body.classList.contains('dark')) {
+                    themeIcon.className = 'fas fa-sun';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    themeIcon.className = 'fas fa-moon';
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+
+            // EmailJS Form Handling
+            const form = document.getElementById('consultationForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const submitSpinner = document.getElementById('submitSpinner');
+            const formMessage = document.getElementById('formMessage');
+
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Show loading state
+                    submitText.textContent = 'Sending...';
+                    submitSpinner.classList.remove('hidden');
+                    submitBtn.disabled = true;
+                    formMessage.classList.add('hidden');
+
+                    // Prepare form data
+                    const formData = {
+                        full_name: form.full_name.value,
+                        email: form.email.value,
+                        service: form.service.value,
+                        preferred_date: form.preferred_date.value,
+                        project_details: form.project_details.value,
+                        submission_date: new Date().toLocaleString()
+                    };
+
+                    // Send email using EmailJS
+                    // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual EmailJS service and template IDs
+                    emailjs.send('service_px27q27', 'template_gkujspr', formData)
+                        .then(function(response) {
+                            console.log('SUCCESS!', response.status, response.text);
+                            
+                            // Show success message
+                            formMessage.textContent = 'Thank you! Your consultation request has been sent successfully. We will contact you soon.';
+                            formMessage.classList.remove('hidden', 'bg-red-500/10', 'text-red-500');
+                            formMessage.classList.add('bg-green-500/10', 'text-green-500');
+                            
+                            // Reset form
+                            form.reset();
+                        })
+                        .catch(function(error) {
+                            console.log('FAILED...', error);
+                            
+                            // Show error message
+                            formMessage.textContent = 'Sorry, there was an error sending your message. Please try again or contact us directly.';
+                            formMessage.classList.remove('hidden', 'bg-green-500/10', 'text-green-500');
+                            formMessage.classList.add('bg-red-500/10', 'text-red-500');
+                        })
+                        .finally(function() {
+                            // Reset button state
+                            submitText.textContent = 'Schedule Consultation';
+                            submitSpinner.classList.add('hidden');
+                            submitBtn.disabled = false;
+                        });
+                });
+            }
+
+            // Add fade-in animation to sections when they come into view
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all sections
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
