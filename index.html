@@ -6,7 +6,7 @@
     <title>Abubakar Yunusa Mohammed - Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <!-- EmailJS removed: using Gmail compose via client-side handler -->
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -23,8 +23,7 @@
             }
         }
         
-        // Initialize EmailJS with your Public Key
-        emailjs.init("SPFJC9c92Y5bnE0B1"); // Replace with your actual EmailJS public key
+        // Email sending handled via Gmail web compose (client-side)
     </script>
     <style>
         :root {
@@ -732,7 +731,7 @@
                 }
             });
 
-            // EmailJS Form Handling
+            // Gmail compose client-side handler
             const form = document.getElementById('consultationForm');
             const submitBtn = document.getElementById('submitBtn');
             const submitText = document.getElementById('submitText');
@@ -742,51 +741,35 @@
             if (form) {
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    
-                    // Show loading state
-                    submitText.textContent = 'Sending...';
+
+                    submitText.textContent = 'Opening Gmail...';
                     submitSpinner.classList.remove('hidden');
                     submitBtn.disabled = true;
                     formMessage.classList.add('hidden');
 
-                    // Prepare form data
-                    const formData = {
-                        full_name: form.full_name.value,
-                        email: form.email.value,
-                        service: form.service.value,
-                        preferred_date: form.preferred_date.value,
-                        project_details: form.project_details.value,
-                        submission_date: new Date().toLocaleString()
-                    };
+                    const full_name = form.full_name.value || '';
+                    const email = form.email.value || '';
+                    const service = form.service.value || '';
+                    const preferred_date = form.preferred_date.value || '';
+                    const project_details = form.project_details.value || '';
 
-                    // Send email using EmailJS
-                    // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual EmailJS service and template IDs
-                    emailjs.send('service_px27q27', 'template_gkujspr', formData)
-                        .then(function(response) {
-                            console.log('SUCCESS!', response.status, response.text);
-                            
-                            // Show success message
-                            formMessage.textContent = 'Thank you! Your consultation request has been sent successfully. We will contact you soon.';
-                            formMessage.classList.remove('hidden', 'bg-red-500/10', 'text-red-500');
-                            formMessage.classList.add('bg-green-500/10', 'text-green-500');
-                            
-                            // Reset form
-                            form.reset();
-                        })
-                        .catch(function(error) {
-                            console.log('FAILED...', error);
-                            
-                            // Show error message
-                            formMessage.textContent = 'Sorry, there was an error sending your message. Please try again or contact us directly.';
-                            formMessage.classList.remove('hidden', 'bg-green-500/10', 'text-green-500');
-                            formMessage.classList.add('bg-red-500/10', 'text-red-500');
-                        })
-                        .finally(function() {
-                            // Reset button state
-                            submitText.textContent = 'Schedule Consultation';
-                            submitSpinner.classList.add('hidden');
-                            submitBtn.disabled = false;
-                        });
+                    const subject = encodeURIComponent(`Consultation request from ${full_name}`);
+                    const bodyText = `Name: ${full_name}\nEmail: ${email}\nService Needed: ${service}\nPreferred Date: ${preferred_date}\n\nProject Details:\n${project_details}`;
+                    const body = encodeURIComponent(bodyText);
+
+                    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=abubakaryunusa971@gmail.com&su=${subject}&body=${body}`;
+                    const mailtoUrl = `mailto:abubakaryunusa971@gmail.com?subject=${subject}&body=${body}`;
+
+                    // Try opening Gmail web compose in a new tab; fall back to mailto if blocked
+                    const opened = window.open(gmailUrl, '_blank');
+                    if (!opened) {
+                        window.location.href = mailtoUrl;
+                    }
+
+                    // Reset UI state
+                    submitText.textContent = 'Schedule Consultation';
+                    submitSpinner.classList.add('hidden');
+                    submitBtn.disabled = false;
                 });
             }
 
